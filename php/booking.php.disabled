@@ -1,0 +1,266 @@
+<?php
+/**
+ * Booking Form Handler
+ *
+ * This file processes the booking form submissions and stores them in the database.
+ */
+
+// Prevent any output before JSON response
+ob_start();
+
+// Disable error display to prevent HTML in JSON response
+ini_set('display_errors', 0);
+error_reporting(E_ALL);
+
+// Set content type to JSON for AJAX responses
+header('Content-Type: application/json');
+
+// Include database configuration and notifications
+require_once 'config.php';
+require_once 'notifications.php';
+
+// Clear any output buffer
+ob_clean();
+
+// Initialize response array
+$response = [
+    'success' => false,
+    'message' => '',
+    'booking_ref' => ''
+];
+
+// Check if the form is submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    
+    // Get database connection
+    $conn = connectDB();
+    
+    // Check if database connection was successful
+    if (!$conn) {
+        $response['message'] = "Sorry, we're experiencing technical difficulties. Please try again later.";
+        outputResponse($response);
+        exit;
+    }
+    
+    // Validate and sanitize form data
+    $name = isset($_POST['name']) ? sanitizeInput($_POST['name']) : '';
+    $email = isset($_POST['email']) ? sanitizeInput($_POST['email']) : '';
+    $phone = isset($_POST['phone']) ? sanitizeInput($_POST['phone']) : '';
+    $event_date = isset($_POST['event_date']) ? sanitizeInput($_POST['event_date']) : '';
+    $event_time = isset($_POST['event_time']) ? sanitizeInput($_POST['event_time']) : '';
+    $event_type = isset($_POST['event_type']) ? sanitizeInput($_POST['event_type']) : '';
+    $event_location = isset($_POST['event_location']) ? sanitizeInput($_POST['event_location']) : '';
+    $guests = isset($_POST['guests']) ? (int)$_POST['guests'] : 0;
+    $package = isset($_POST['package']) ? sanitizeInput($_POST['package']) : '';
+    $message = isset($_POST['message']) ? sanitizeInput($_POST['message']) : '';
+    $terms = isset($_POST['terms']) ? true : false;
+    
+    // Validate required fields
+    if (empty($name) || empty($email) || empty($phone) || empty($event_date) || 
+        empty($event_time) || empty($event_type) || empty($event_location) || 
+        $guests <= 0 || !$terms) {
+        
+        $response['message'] = "Please fill in all required fields.";
+        outputResponse($response);
+        exit;
+    }
+    
+    // Validate email
+    if (!validateEmail($email)) {
+        $response['message'] = "Please enter a valid email address.";
+        outputResponse($response);
+        exit;
+    }
+    
+    // Validate event date (must be in the future)
+    $current_date = date('Y-m-d');
+    if ($event_date < $current_date) {
+        $response['message'] = "Event date cannot be in the past.";
+        outputResponse($response);
+        exit;
+    }
+    
+    try {
+        // Generate a unique booking reference
+        $booking_ref = generateBookingReference();
+        
+        // Prepare SQL statement
+        $sql = "INSERT INTO bookings (booking_ref, name, email, phone, event_date, event_time, 
+                event_type, event_location, guests, package, message, created_at) 
+                VALUES (:booking_ref, :name, :email, :phone, :event_date, :event_time, 
+                :event_type, :event_location, :guests, :package, :message, NOW())";
+        
+        $stmt = $conn->prepare($sql);
+        
+        // Bind parameters
+        $stmt->bindParam(':booking_ref', $booking_ref);
+        $stmt->bindParam(':name', $name);
+        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':phone', $phone);
+        $stmt->bindParam(':event_date', $event_date);
+        $stmt->bindParam(':event_time', $event_time);
+        $stmt->bindParam(':event_type', $event_type);
+        $stmt->bindParam(':event_location', $event_location);
+        $stmt->bindParam(':guests', $guests);
+        $stmt->bindParam(':package', $package);
+        $stmt->bindParam(':message', $message);
+        
+        // Execute the statement
+        if (!$stmt->execute()) {
+            throw new PDOException("Failed to execute booking query");
+        }
+        
+        // Prepare booking data for notifications
+        $booking_data = [
+            'booking_ref' => $booking_ref,
+            'name' => $name,
+            'email' => $email,
+            'phone' => $phone,
+            'event_date' => $event_date,
+            'event_time' => $event_time,
+            'event_type' => $event_type,
+            'event_location' => $event_location,
+            'guests' => $guests,
+            'package' => $package,
+            'message' => $message
+        ];
+
+        // Send notifications (don't let email failures affect booking success)
+        try {
+            if (function_exists('sendBookingNotification')) {
+                sendBookingNotification($booking_data);
+            }
+        } catch (Exception $e) {
+            error_log("Notification error: " . $e->getMessage());
+        }
+
+        // Create notification record in database
+        try {
+            if (function_exists('createNotification')) {
+                createNotification(
+                    'new_booking',
+                    'New Booking Received',
+                    "New booking from {$name} for {$event_type} on " . date('M j, Y', strtotime($event_date)),
+                    $booking_data
+                );
+            }
+        } catch (Exception $e) {
+            error_log("Database notification error: " . $e->getMessage());
+        }
+
+        // Set success response
+        $response['success'] = true;
+        $response['message'] = "Thank you for your booking request! We will contact you shortly to confirm the details. Your booking reference is: " . $booking_ref;
+        $response['booking_ref'] = $booking_ref;
+        
+    } catch(PDOException $e) {
+        // Log the error
+        error_log("Booking error: " . $e->getMessage());
+        
+        // Set error response
+        $response['success'] = false;
+        $response['message'] = "Sorry, we couldn't process your booking. Please try again later.";
+    } catch(Exception $e) {
+        // Log any other errors
+        error_log("General booking error: " . $e->getMessage());
+        
+        // Set error response
+        $response['success'] = false;
+        $response['message'] = "An error occurred. Please try again later.";
+    }
+    
+    // Close connection
+    $conn = null;
+    
+    // Output response
+    outputResponse($response);
+    
+} else {
+    // Not a POST request
+    $response['message'] = "Invalid request method.";
+    outputResponse($response);
+}
+
+/**
+ * Send booking confirmation email
+ */
+function sendBookingConfirmationEmail($name, $email, $booking_ref, $event_date, $event_time, $event_type) {
+    // Format date and time for display
+    $formatted_date = formatDate($event_date);
+    $formatted_time = formatTime($event_time);
+    
+    // Email subject
+    $subject = "Booking Confirmation - " . $booking_ref;
+    
+    // Email headers
+    $headers = "MIME-Version: 1.0" . "\r\n";
+    $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+    $headers .= "From: Byiringiro Valentin MC <valentin@mcservices.com>" . "\r\n";
+    
+    // Email message
+    $message = "
+    <html>
+    <head>
+        <title>Booking Confirmation</title>
+        <style>
+            body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+            .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+            .header { background-color: #8e44ad; color: white; padding: 20px; text-align: center; }
+            .content { padding: 20px; }
+            .footer { background-color: #f4f4f4; padding: 20px; text-align: center; font-size: 12px; }
+            .booking-details { background-color: #f9f9f9; padding: 15px; margin: 20px 0; border-left: 4px solid #8e44ad; }
+        </style>
+    </head>
+    <body>
+        <div class='container'>
+            <div class='header'>
+                <h1>Booking Confirmation</h1>
+            </div>
+            <div class='content'>
+                <p>Dear $name,</p>
+                <p>Thank you for booking Byiringiro Valentin as your Master of Ceremony. We have received your booking request and will contact you shortly to confirm the details.</p>
+                
+                <div class='booking-details'>
+                    <h3>Booking Details:</h3>
+                    <p><strong>Booking Reference:</strong> $booking_ref</p>
+                    <p><strong>Event Type:</strong> $event_type</p>
+                    <p><strong>Event Date:</strong> $formatted_date</p>
+                    <p><strong>Event Time:</strong> $formatted_time</p>
+                </div>
+                
+                <p>If you have any questions or need to make changes to your booking, please contact us at valentin@mcservices.com or call +123 456 7890.</p>
+                
+                <p>We look forward to making your event special!</p>
+                
+                <p>Best regards,<br>
+                Byiringiro Valentin<br>
+                Master of Ceremony</p>
+            </div>
+            <div class='footer'>
+                <p>&copy; 2025 Byiringiro Valentin MC Services. All Rights Reserved.</p>
+                <p>Kigali, Rwanda | +123 456 7890 | valentin@mcservices.com</p>
+            </div>
+        </div>
+    </body>
+    </html>
+    ";
+    
+    // Send email - suppress warnings with @ to prevent output that would break JSON response
+    @mail($email, $subject, $message, $headers);
+    
+    // Return true even if mail fails - we're handling this gracefully in the main code
+    return true;
+}
+
+/**
+ * Output JSON response and exit
+ */
+function outputResponse($response) {
+    // Check if headers have already been sent
+    if (!headers_sent()) {
+        header('Content-Type: application/json');
+    }
+    echo json_encode($response);
+    exit;
+}
+?>

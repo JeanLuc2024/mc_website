@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Byiringiro Valentin MC</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>Valentin<span>MC</span></h1>
+            </div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html" data-en="Home" data-rw="Ahabanza">Home</a></li>
+                    <li><a href="about.html" class="active" data-en="About" data-rw="Kuri Njye">About</a></li>
+                    <li><a href="services.html" data-en="Services" data-rw="Serivisi">Services</a></li>
+                    <li><a href="gallery.html" data-en="Gallery" data-rw="Amafoto">Gallery</a></li>
+                    <li><a href="booking.html" class="btn-book" data-en="Book Now" data-rw="Baza Ubone">Book Now</a></li>
+                    <li class="language-switcher">
+                        <select id="languageSelect" onchange="switchLanguage()">
+                            <option value="en">English</option>
+                            <option value="rw">Kinyarwanda</option>
+                        </select>
+                    </li>
+                </ul>
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Page Banner -->
+    <section class="page-banner">
+        <div class="container">
+            <h1>Byiringiro Valentin MC</h1>
+            <p data-en="Learn more about your professional Master of Ceremony" data-rw="Menya byinshi kuri umuyobozi wawe w'ibirori w'ubwiyunge">Learn more about your professional Master of Ceremony</p>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about-section">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-image">
+                    <img src="images/valante.jpg" alt="Byiringiro Valentin - Master of Ceremony">
+                </div>
+                <div class="about-text">
+                    <h2 data-en="Meet Your MC" data-rw="Bonana n'Umuyobozi Wawe w'Ibirori">Meet Your MC</h2>
+                    <p data-en="Byiringiro Valentin is a professional Master of Ceremony with years of experience in hosting a wide range of events, from elegant weddings to corporate meetings and anniversary celebrations." data-rw="Byiringiro Valentin ni umuyobozi w'ibirori w'ubwiyunge afite imyaka myinshi y'ubunararibonye mu gukora ibirori bitandukanye, kuva ku bukwe bwiza kugeza ku nama z'ubucuruzi no kwizihiza isabukuru.">Byiringiro Valentin is a professional Master of Ceremony with years of experience in hosting a wide range of events, from elegant weddings to corporate meetings and anniversary celebrations.</p>
+                    <p data-en="With a natural charisma, excellent communication skills, and a keen attention to detail, Valentin ensures that every event runs smoothly and creates memorable experiences for all attendees." data-rw="Afite ubushobozi kamere bwo gukurura abantu, ubuhanga bwo kuvugana, n'ubwitabire bukabije ku bisobanuro, Valentin areba ko ibirori byose bigenda neza kandi bikora ubunararibonye butazibagirana ku bayitabira bose.">With a natural charisma, excellent communication skills, and a keen attention to detail, Valentin ensures that every event runs smoothly and creates memorable experiences for all attendees.</p>
+                    <p data-en="His ability to engage audiences, manage event timelines, and adapt to unexpected situations makes him the perfect choice for your special occasion." data-rw="Ubushobozi bwe bwo gukurura abayitabira, gucunga igihe cy'ibirori, no kwihangana n'ibihe bitunguranye bimuha ubwiza bwo guhitamo ku birori byawe byihariye.">His ability to engage audiences, manage event timelines, and adapt to unexpected situations makes him the perfect choice for your special occasion.</p>
+                    <div class="about-stats">
+                        <div class="stat">
+                            <span class="stat-number">100+</span>
+                            <span class="stat-text" data-en="Weddings" data-rw="Ubukwe">Weddings</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">75+</span>
+                            <span class="stat-text" data-en="Corporate Events" data-rw="Ibirori by'Ubucuruzi">Corporate Events</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">50+</span>
+                            <span class="stat-text" data-en="Anniversaries" data-rw="Isabukuru">Anniversaries</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Section -->
+    <section class="why-choose">
+        <div class="container">
+            <div class="section-header">
+                <h2 data-en="Why Choose Valentin?" data-rw="Kuki Uhitamo Valentin?">Why Choose Valentin?</h2>
+                <p data-en="What sets Byiringiro Valentin apart as your Master of Ceremony" data-rw="Icyo gitandukanya Byiringiro Valentin nk'umuyobozi wawe w'ibirori">What sets Byiringiro Valentin apart as your Master of Ceremony</p>
+            </div>
+            <div class="features-container">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h3 data-en="Professional Experience" data-rw="Ubunararibonye bw'Ubwiyunge">Professional Experience</h3>
+                    <p data-en="With years of experience in the industry, Valentin brings professionalism and expertise to every event." data-rw="Afite imyaka myinshi y'ubunararibonye mu nganda, Valentin azana ubwiyunge n'ubuhanga mu birori byose.">With years of experience in the industry, Valentin brings professionalism and expertise to every event.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3 data-en="Excellent Communication" data-rw="Itumanaho Ryiza">Excellent Communication</h3>
+                    <p data-en="Clear, engaging communication that keeps your audience captivated throughout the event." data-rw="Itumanaho risobanutse, rishimishije rikomeza gukurura abayitabira mu gihe cyose cy'ibirori.">Clear, engaging communication that keeps your audience captivated throughout the event.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3 data-en="Time Management" data-rw="Gucunga Igihe">Time Management</h3>
+                    <p data-en="Ensures your event runs on schedule while maintaining flexibility for unexpected moments." data-rw="Areba ko ibirori byawe bigenda ku gihe cyateganijwe mu gihe akomeje kugira ubwihangane ku bihe bitunguranye.">Ensures your event runs on schedule while maintaining flexibility for unexpected moments.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h3 data-en="Creative Solutions" data-rw="Ibisubizo by'Ubuhanga">Creative Solutions</h3>
+                    <p data-en="Innovative approaches to make your event unique and memorable for all attendees." data-rw="Uburyo bushya bwo gukora ibirori byawe bidasanzwe kandi bitazibagirana ku bayitabira bose.">Innovative approaches to make your event unique and memorable for all attendees.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3 data-en="Passionate Dedication" data-rw="Kwiyegurira mu Rukundo">Passionate Dedication</h3>
+                    <p data-en="A genuine passion for creating special moments and memorable experiences." data-rw="Urukundo rwukuri rwo gukora ibihe byihariye n'ubunararibonye butazibagirana.">A genuine passion for creating special moments and memorable experiences.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 data-en="Audience Engagement" data-rw="Gukurura Abayitabira">Audience Engagement</h3>
+                    <p data-en="Skilled at engaging diverse audiences and creating an inclusive atmosphere." data-rw="Afite ubuhanga bwo gukurura abayitabira batandukanye no gukora ikirere cyakira abantu bose.">Skilled at engaging diverse audiences and creating an inclusive atmosphere.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Journey Section -->
+    <section class="journey-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 data-en="My Journey" data-rw="Urugendo Rwanjye">My Journey</h2>
+                <p data-en="The path to becoming a professional Master of Ceremony" data-rw="Inzira yo kuba umuyobozi w'ibirori w'ubwiyunge">The path to becoming a professional Master of Ceremony</p>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3>2015</h3>
+                        <h4 data-en="The Beginning" data-rw="Intangiriro">The Beginning</h4>
+                        <p data-en="Started hosting small community events and discovered a passion for public speaking and event management." data-rw="Natangiye gukora ibirori bito by'abaturage maze mbona urukundo rwo kuvuga mu ruhame no gucunga ibirori.">Started hosting small community events and discovered a passion for public speaking and event management.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3>2017</h3>
+                        <h4 data-en="First Wedding" data-rw="Ubukwe bwa Mbere">First Wedding</h4>
+                        <p data-en="Hosted my first professional wedding ceremony, marking the start of a specialized career in MC services." data-rw="Nakoze ubukwe bwanjye bwa mbere bw'ubwiyunge, byerekana intangiriro y'umwuga wihariye mu serivisi zo kuyobora ibirori.">Hosted my first professional wedding ceremony, marking the start of a specialized career in MC services.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3>2019</h3>
+                        <h4 data-en="Corporate Expansion" data-rw="Kwagura mu Bucuruzi">Corporate Expansion</h4>
+                        <p data-en="Expanded services to include corporate meetings and events, developing a more diverse portfolio." data-rw="Naguye serivisi zanjye kugira ngo zirimo inama z'ubucuruzi n'ibirori, nkiteza imbere portfolio itandukanye.">Expanded services to include corporate meetings and events, developing a more diverse portfolio.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3>2021</h3>
+                        <h4 data-en="Professional Training" data-rw="Amahugurwa y'Ubwiyunge">Professional Training</h4>
+                        <p data-en="Completed advanced training in public speaking, event management, and audience engagement techniques." data-rw="Narangije amahugurwa y'urwego rwo hejuru mu kuvuga mu ruhame, gucunga ibirori, n'uburyo bwo gukurura abayitabira.">Completed advanced training in public speaking, event management, and audience engagement techniques.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3>2023</h3>
+                        <h4 data-en="International Events" data-rw="Ibirori Mpuzamahanga">International Events</h4>
+                        <p data-en="Began hosting international events, bringing my MC services to a global audience." data-rw="Natangiye gukora ibirori mpuzamahanga, nzana serivisi zanjye zo kuyobora ibirori ku bayitabira b'isi yose.">Began hosting international events, bringing my MC services to a global audience.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3 data-en="Today" data-rw="Uyu Munsi">Today</h3>
+                        <h4 data-en="Continued Excellence" data-rw="Komeza Ubwiza">Continued Excellence</h4>
+                        <p data-en="Continuing to provide exceptional MC services for weddings, corporate events, and anniversary celebrations." data-rw="Nkomeje gutanga serivisi zidasanzwe zo kuyobora ibirori ku bukwe, ibirori by'ubucuruzi, no kwizihiza isabukuru.">Continuing to provide exceptional MC services for weddings, corporate events, and anniversary celebrations.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section class="cta">
+        <div class="container">
+            <h2 data-en="Ready to Work Together?" data-rw="Witeguye Gukorana?">Ready to Work Together?</h2>
+            <p data-en="Let's make your next event unforgettable!" data-rw="Reka dukore ibirori byawe bitaha bitazibagirana!">Let's make your next event unforgettable!</p>
+            <a href="booking.html" class="btn-primary" data-en="Book Now" data-rw="Baza Ubone">Book Now</a>
+            <a href="services.html" class="btn-secondary" data-en="View Services" data-rw="Reba Serivisi">View Services</a>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>Valentin<span>MC</span></h2>
+                    <p data-en="Making your events memorable" data-rw="Gukora ibirori byawe bitazibagirana">Making your events memorable</p>
+                </div>
+                <div class="footer-links">
+                    <h3 data-en="Quick Links" data-rw="Ibikubiyemo Byihuse">Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html" data-en="Home" data-rw="Ahabanza">Home</a></li>
+                        <li><a href="about.html" data-en="About" data-rw="Kuri Njye">About</a></li>
+                        <li><a href="services.html" data-en="Services" data-rw="Serivisi">Services</a></li>
+                        <li><a href="gallery.html" data-en="Gallery" data-rw="Amafoto">Gallery</a></li>
+                        <li><a href="booking.html" data-en="Book Now" data-rw="Baza Ubone">Book Now</a></li>
+                    </ul>
+                </div>
+                <div class="footer-services">
+                    <h3 data-en="Services" data-rw="Serivisi">Services</h3>
+                    <ul>
+                        <li><a href="services.html#wedding" data-en="Wedding Ceremonies" data-rw="Ibirori by'Ubukwe">Wedding Ceremonies</a></li>
+                        <li><a href="services.html#anniversary" data-en="Anniversary Celebrations" data-rw="Kwizihiza Isabukuru">Anniversary Celebrations</a></li>
+                        <li><a href="services.html#meetings" data-en="Corporate Meetings" data-rw="Inama z'Ubucuruzi">Corporate Meetings</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h3 data-en="Contact" data-rw="Twandikire">Contact</h3>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> 0788764456</li>
+                        <li><i class="fas fa-envelope"></i>byirival009@gmail.com</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Kigali, Rwanda</li>
+                    </ul>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p data-en="&copy; 2025 Byiringiro Valentin MC Services. All Rights Reserved." data-rw="&copy; 2025 Serivisi za Byiringiro Valentin zo Kuyobora Ibirori. Uburenganzira Bwose Burabitswe.">&copy; 2025 Byiringiro Valentin MC Services. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+
+    <!-- Language Switcher Styles -->
+    <style>
+        /* Language Switcher Styles */
+        .language-switcher {
+            margin-left: 20px;
+        }
+
+        .language-switcher select {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .language-switcher select:focus {
+            outline: none;
+            background: var(--secondary-color);
+        }
+
+        @media (max-width: 768px) {
+            .language-switcher {
+                margin-left: 0;
+                margin-top: 10px;
+            }
+        }
+    </style>
+
+    <script src="js/script.js"></script>
+
+    <!-- Language Translation Script -->
+    <script>
+        function switchLanguage() {
+            const selectedLang = document.getElementById('languageSelect').value;
+            const elements = document.querySelectorAll('[data-en][data-rw]');
+
+            elements.forEach(element => {
+                if (selectedLang === 'rw') {
+                    element.textContent = element.getAttribute('data-rw');
+                } else {
+                    element.textContent = element.getAttribute('data-en');
+                }
+            });
+
+            // Save language preference
+            localStorage.setItem('selectedLanguage', selectedLang);
+        }
+
+        // Load saved language preference on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedLang = localStorage.getItem('selectedLanguage') || 'en';
+            document.getElementById('languageSelect').value = savedLang;
+            if (savedLang === 'rw') {
+                switchLanguage();
+            }
+        });
+    </script>
+</body>
+</html>

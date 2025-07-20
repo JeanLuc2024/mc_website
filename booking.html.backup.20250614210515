@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Now | Byiringiro Valentin MC</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>Valentin<span>MC</span></h1>
+            </div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="gallery.html">Gallery</a></li>
+                    <li><a href="booking.html" class="active btn-book">Book Now</a></li>
+                </ul>
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Page Banner -->
+    <section class="page-banner">
+        <div class="container">
+            <h1>Book an Appointment</h1>
+            <p>Let's work together to make your event special</p>
+        </div>
+    </section>
+
+    <!-- Booking Section -->
+    <section class="booking-section">
+        <div class="container">
+            <div class="booking-container">
+                <div class="booking-info">
+                    <h2>How to Book</h2>
+                    <p>Booking Byiringiro Valentin as your Master of Ceremony is simple. Fill out the form with your event details, and we'll get back to you within 24 hours to discuss your requirements in more detail.</p>
+                    
+                    <div class="booking-steps">
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h3>Submit Inquiry</h3>
+                                <p>Fill out the booking form with your event details.</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h3>Consultation</h3>
+                                <p>We'll contact you to discuss your specific needs.</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h3>Confirmation</h3>
+                                <p>Receive a detailed proposal and confirm your booking.</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h3>Event Planning</h3>
+                                <p>Work together to plan the perfect event flow.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-info">
+                        <h3>Contact Information</h3>
+                        <ul>
+                            <li><i class="fas fa-phone"></i> +123 456 7890</li>
+                            <li><i class="fas fa-envelope"></i> valentin@mcservices.com</li>
+                            <li><i class="fas fa-map-marker-alt"></i> Kigali, Rwanda</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="booking-form">
+                    <h2>Book Your Event</h2>
+
+
+
+                    <form id="appointmentForm" action="php/booking_handler.php" method="POST">
+                        <div class="form-group">
+                            <label for="name">Full Name*</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email Address*</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone">Phone Number*</label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="event_date">Event Date*</label>
+                                <input type="date" id="event_date" name="event_date" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="event_time">Event Time*</label>
+                                <input type="time" id="event_time" name="event_time" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="event_type">Event Type*</label>
+                            <select id="event_type" name="event_type" required>
+                                <option value="" disabled selected>Select Event Type</option>
+                                <option value="wedding">Wedding Ceremony</option>
+                                <option value="anniversary">Anniversary Celebration</option>
+                                <option value="corporate">Corporate Meeting</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="event_location">Event Location*</label>
+                            <input type="text" id="event_location" name="event_location" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="guests">Expected Number of Guests*</label>
+                            <input type="number" id="guests" name="guests" min="1" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="package">Service Package</label>
+                            <select id="package" name="package">
+                                <option value="" disabled selected>Select Package</option>
+                                <option value="basic">Basic Package</option>
+                                <option value="premium">Premium Package</option>
+                                <option value="deluxe">Deluxe Package</option>
+                                <option value="custom">Custom Package</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Additional Information</label>
+                            <textarea id="message" name="message" rows="5"></textarea>
+                        </div>
+                        
+                        <div class="form-group checkbox-group">
+                            <input type="checkbox" id="terms" name="terms" required>
+                            <label for="terms">I agree to the <a href="#" onclick="showTerms(); return false;">terms and conditions</a>*</label>
+                        </div>
+                        
+                        <!-- Success/Error Messages (positioned near submit button) -->
+                        <div id="messageContainer" class="message-container" style="display: none;">
+                            <div id="messageContent" class="message-content"></div>
+                            <button type="button" id="closeMessage" class="close-message">&times;</button>
+                        </div>
+
+                        <div class="form-submit">
+                            <button type="submit" class="btn-primary" id="submitBtn">
+                                <span class="btn-text">Submit Booking Request</span>
+                                <span class="btn-loading" style="display: none;">
+                                    <i class="fas fa-spinner fa-spin"></i> Submitting...
+                                </span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Frequently Asked Questions</h2>
+                <p>Find answers to common questions about our MC services</p>
+            </div>
+            
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>How far in advance should I book?</h3>
+                        <span class="faq-toggle"><i class="fas fa-plus"></i></span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We recommend booking at least 3-6 months in advance for weddings and large events, and 1-2 months for smaller events. Popular dates can fill up quickly, especially during wedding season.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>What is the payment process?</h3>
+                        <span class="faq-toggle"><i class="fas fa-plus"></i></span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We require a 30% deposit to secure your date, with the remaining balance due one week before the event. We accept bank transfers, mobile money, and credit card payments.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Can you customize your services for my specific event?</h3>
+                        <span class="faq-toggle"><i class="fas fa-plus"></i></span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Absolutely! We pride ourselves on creating customized experiences for each client. During our consultation, we'll discuss your specific needs and preferences to tailor our services accordingly.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>What happens if you're unavailable on my event date?</h3>
+                        <span class="faq-toggle"><i class="fas fa-plus"></i></span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>If Byiringiro Valentin is unavailable on your requested date, we can recommend other professional MCs from our network who provide similar quality services.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Do you provide equipment like microphones?</h3>
+                        <span class="faq-toggle"><i class="fas fa-plus"></i></span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We do not provide sound equipment. We work with your venue or sound provider to ensure everything is properly set up for optimal performance.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>What languages do you speak?</h3>
+                        <span class="faq-toggle"><i class="fas fa-plus"></i></span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Byiringiro Valentin is fluent in English, French, and Kinyarwanda, making him versatile for various events and audiences.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section class="cta">
+        <div class="container">
+            <h2>Have More Questions?</h2>
+            <p>Contact us directly for personalized assistance</p>
+            <a href="tel:+123456789" class="btn-primary"><i class="fas fa-phone"></i> Call Now</a>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>Valentin<span>MC</span></h2>
+                    <p>Making your events memorable</p>
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="gallery.html">Gallery</a></li>
+                        <li><a href="booking.html">Book Now</a></li>
+                    </ul>
+                </div>
+                <div class="footer-services">
+                    <h3>Services</h3>
+                    <ul>
+                        <li><a href="services.html#wedding">Wedding Ceremonies</a></li>
+                        <li><a href="services.html#anniversary">Anniversary Celebrations</a></li>
+                        <li><a href="services.html#meetings">Corporate Meetings</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> +123 456 7890</li>
+                        <li><i class="fas fa-envelope"></i> valentin@mcservices.com</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Kigali, Rwanda</li>
+                    </ul>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Byiringiro Valentin MC Services. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+
+    <!-- Booking Form Styles -->
+    <style>
+        /* Message Container Styles */
+        .message-container {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            position: relative;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        .message-container.success {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+
+        .message-container.error {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+
+        .message-content {
+            margin-right: 30px;
+            line-height: 1.5;
+        }
+
+        .close-message {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: inherit;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+
+        .close-message:hover {
+            opacity: 1;
+        }
+
+        /* Loading Button Styles */
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .btn-loading {
+            display: none;
+        }
+
+        /* Checkbox Styles */
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            margin-top: 3px;
+            width: auto;
+            flex-shrink: 0;
+        }
+
+        .checkbox-group label {
+            margin: 0;
+            font-size: 14px;
+            line-height: 1.4;
+            cursor: pointer;
+        }
+
+        .checkbox-group a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .checkbox-group a:hover {
+            text-decoration: underline;
+        }
+
+        /* Form Validation Styles */
+        .form-group input.error,
+        .form-group select.error,
+        .form-group textarea.error {
+            border-color: #dc3545;
+            box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+        }
+
+        .form-group input[type="checkbox"].error {
+            outline: 2px solid #dc3545;
+            outline-offset: 2px;
+        }
+
+        .form-group .error-message {
+            color: #dc3545;
+            font-size: 14px;
+            margin-top: 5px;
+            display: block;
+        }
+
+        /* Animation */
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Success Animation */
+        .success-animation {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .message-container {
+                padding: 12px;
+                font-size: 14px;
+            }
+
+            .close-message {
+                top: 8px;
+                right: 12px;
+                font-size: 18px;
+            }
+        }
+    </style>
+
+    <!-- Booking Form JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('appointmentForm');
+            const submitBtn = document.getElementById('submitBtn');
+            const btnText = submitBtn.querySelector('.btn-text');
+            const btnLoading = submitBtn.querySelector('.btn-loading');
+            const messageContainer = document.getElementById('messageContainer');
+            const messageContent = document.getElementById('messageContent');
+            const closeMessage = document.getElementById('closeMessage');
+
+            // Set minimum date to today
+            const eventDateInput = document.getElementById('event_date');
+            const today = new Date().toISOString().split('T')[0];
+            eventDateInput.setAttribute('min', today);
+
+            // Prevent double submissions
+            let isSubmitting = false;
+
+            
+            // ENHANCED SUBMISSION PROTECTION - Prevent ALL double submissions
+            let submissionInProgress = false;
+            let submissionCompleted = false;
+            
+            // Form submission handler
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // TRIPLE PROTECTION against double submission
+                if (submissionInProgress) {
+                    console.log('Submission already in progress - blocking duplicate');
+                    return false;
+                }
+                
+                if (submissionCompleted) {
+                    console.log('Submission already completed - blocking duplicate');
+                    return false;
+                }
+                
+                if (submitBtn.disabled) {
+                    console.log('Submit button disabled - blocking submission');
+                    return false;
+                }
+
+                // Clear previous messages
+                hideMessage();
+                clearErrors();
+
+                // Validate form
+                if (!validateForm()) {
+                    return false;
+                }
+
+                // Set all protection flags
+                submissionInProgress = true;
+                submitBtn.disabled = true;
+                
+                // Show loading state
+                setLoadingState(true);
+
+                // Prepare form data
+                const formData = new FormData(form);
+
+                // Submit form via AJAX with timeout
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
+
+                fetch('php/booking_handler.php', {
+                    method: 'POST',
+                    body: formData,
+                    signal: controller.signal
+                })
+                .then(response => {
+                    clearTimeout(timeoutId);
+                    
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+
+                    const contentType = response.headers.get('content-type');
+                    if (!contentType || !contentType.includes('application/json')) {
+                        throw new Error('Server returned non-JSON response');
+                    }
+
+                    return response.json();
+                })
+                .then(data => {
+                    // Reset protection flags
+                    submissionInProgress = false;
+                    submissionCompleted = true; // Mark as completed to prevent resubmission
+                    setLoadingState(false);
+
+                    console.log('Server response:', data);
+
+                    if (data.success) {
+                        showMessage(data.message, 'success');
+                        form.reset();
+
+                        // Scroll to message
+                        messageContainer.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'center'
+                        });
+                        
+                        // Keep submit button disabled after successful submission
+                        submitBtn.disabled = true;
+                        submitBtn.textContent = 'Booking Submitted Successfully';
+                        
+                    } else {
+                        showMessage(data.message || 'An error occurred', 'error');
+                        messageContainer.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'center'
+                        });
+                        
+                        // Re-enable form for retry on error
+                        submissionCompleted = false;
+                        submitBtn.disabled = false;
+                    }
+                })
+                .catch(error => {
+                    clearTimeout(timeoutId);
+                    console.error('Error details:', error);
+                    
+                    // Reset flags on error
+                    submissionInProgress = false;
+                    submissionCompleted = false;
+                    setLoadingState(false);
+                    submitBtn.disabled = false;
+
+                    let errorMessage = 'Unable to submit your booking. ';
+                    if (error.name === 'AbortError') {
+                        errorMessage += 'Request timed out. Please try again.';
+                    } else if (error.message.includes('HTTP error! status: 500')) {
+                        errorMessage += 'Server error occurred. Please check XAMPP and try again.';
+                    } else {
+                        errorMessage += 'Please check your connection and try again.';
+                    }
+
+                    showMessage(errorMessage, 'error');
+                    messageContainer.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'center'
+                    });
+                });
+                
+                return false; // Prevent any default form submission
+            });
+
+            // Close message handler
+            closeMessage.addEventListener('click', function() {
+                hideMessage();
+            });
+
+            // Auto-hide success messages after 10 seconds
+            let messageTimeout;
+
+            function showMessage(message, type) {
+                clearTimeout(messageTimeout);
+
+                messageContent.innerHTML = message;
+                messageContainer.className = `message-container ${type}`;
+                messageContainer.style.display = 'block';
+
+                if (type === 'success') {
+                    messageTimeout = setTimeout(() => {
+                        hideMessage();
+                    }, 10000);
+                }
+            }
+
+            function hideMessage() {
+                messageContainer.style.display = 'none';
+                clearTimeout(messageTimeout);
+            }
+
+            function setLoadingState(loading) {
+                if (loading) {
+                    submitBtn.disabled = true;
+                    btnText.style.display = 'none';
+                    btnLoading.style.display = 'inline-block';
+                } else {
+                    submitBtn.disabled = false;
+                    btnText.style.display = 'inline-block';
+                    btnLoading.style.display = 'none';
+                }
+            }
+
+            function validateForm() {
+                let isValid = true;
+
+                // Required fields validation
+                const requiredFields = [
+                    'name', 'email', 'phone', 'event_date',
+                    'event_time', 'event_type', 'event_location', 'guests'
+                ];
+
+                requiredFields.forEach(fieldName => {
+                    const field = document.getElementById(fieldName);
+                    if (!field.value.trim()) {
+                        showFieldError(field, 'This field is required');
+                        isValid = false;
+                    }
+                });
+
+                // Email validation
+                const emailField = document.getElementById('email');
+                const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (emailField.value && !emailPattern.test(emailField.value)) {
+                    showFieldError(emailField, 'Please enter a valid email address');
+                    isValid = false;
+                }
+
+                // Phone validation
+                const phoneField = document.getElementById('phone');
+                const phonePattern = /^[\+]?[0-9\s\-\(\)]{10,}$/;
+                if (phoneField.value && !phonePattern.test(phoneField.value)) {
+                    showFieldError(phoneField, 'Please enter a valid phone number');
+                    isValid = false;
+                }
+
+                // Date validation
+                const dateField = document.getElementById('event_date');
+                if (dateField.value && new Date(dateField.value) < new Date(today)) {
+                    showFieldError(dateField, 'Event date cannot be in the past');
+                    isValid = false;
+                }
+
+                // Guests validation
+                const guestsField = document.getElementById('guests');
+                if (guestsField.value && parseInt(guestsField.value) < 1) {
+                    showFieldError(guestsField, 'Number of guests must be at least 1');
+                    isValid = false;
+                }
+
+                // Terms validation
+                const termsField = document.getElementById('terms');
+                if (!termsField.checked) {
+                    showFieldError(termsField, 'You must agree to the terms and conditions');
+                    isValid = false;
+                }
+
+                return isValid;
+            }
+
+            function showFieldError(field, message) {
+                field.classList.add('error');
+
+                // Remove existing error message
+                const existingError = field.parentNode.querySelector('.error-message');
+                if (existingError) {
+                    existingError.remove();
+                }
+
+                // Add new error message
+                const errorElement = document.createElement('span');
+                errorElement.className = 'error-message';
+                errorElement.textContent = message;
+                field.parentNode.appendChild(errorElement);
+
+                // Remove error on input
+                field.addEventListener('input', function() {
+                    field.classList.remove('error');
+                    const errorMsg = field.parentNode.querySelector('.error-message');
+                    if (errorMsg) {
+                        errorMsg.remove();
+                    }
+                }, { once: true });
+            }
+
+            function clearErrors() {
+                const errorFields = document.querySelectorAll('.error');
+                errorFields.forEach(field => {
+                    field.classList.remove('error');
+                });
+
+                const errorMessages = document.querySelectorAll('.error-message');
+                errorMessages.forEach(msg => {
+                    msg.remove();
+                });
+            }
+
+            // showBookingReference function removed - booking reference is now included in main success message
+        });
+
+        // Terms and conditions modal
+        function showTerms() {
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+                background: rgba(0,0,0,0.5); z-index: 10000; display: flex;
+                align-items: center; justify-content: center; padding: 20px;
+            `;
+
+            modal.innerHTML = `
+                <div style="background: white; max-width: 600px; max-height: 80vh; overflow-y: auto;
+                           border-radius: 8px; padding: 30px; position: relative;">
+                    <button onclick="this.closest('div').parentElement.remove()"
+                            style="position: absolute; top: 15px; right: 20px; background: none;
+                                   border: none; font-size: 24px; cursor: pointer;">&times;</button>
+                    <h3>Terms and Conditions</h3>
+                    <div style="line-height: 1.6; color: #333;">
+                        <h4>Booking Terms</h4>
+                        <ul>
+                            <li>All bookings are subject to availability and confirmation</li>
+                            <li>A deposit may be required to secure your booking</li>
+                            <li>Cancellations must be made at least 48 hours in advance</li>
+                            <li>Event details can be modified up to 24 hours before the event</li>
+                        </ul>
+
+                        <h4>Service Agreement</h4>
+                        <ul>
+                            <li>Professional MC services will be provided as agreed</li>
+                            <li>Equipment and backup arrangements will be made</li>
+                            <li>Punctuality and professional conduct guaranteed</li>
+                            <li>Additional services may incur extra charges</li>
+                        </ul>
+
+                        <h4>Payment Terms</h4>
+                        <ul>
+                            <li>Payment terms will be discussed upon booking confirmation</li>
+                            <li>Final payment is due before the event date</li>
+                            <li>Accepted payment methods will be communicated</li>
+                        </ul>
+
+                        <h4>Contact Information</h4>
+                        <p>For any questions or concerns, please contact:</p>
+                        <p><strong>Byiringiro Valentin</strong><br>
+                        Email: izabayojeanlucseverin@gmail.com<br>
+                        Phone: +123 456 7890</p>
+                    </div>
+                    <div style="text-align: center; margin-top: 20px;">
+                        <button onclick="this.closest('div').parentElement.remove()"
+                                style="background: #007bff; color: white; border: none;
+                                       padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+                            Close
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            document.body.appendChild(modal);
+        }
+    </script>
+</body>
+</html>

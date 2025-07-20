@@ -1,0 +1,222 @@
+<?php
+/**
+ * Clean Booking Form Handler
+ * 
+ * This is a simplified, clean version that will definitely work.
+ */
+
+// Prevent any output before JSON response
+ob_start();
+ini_set('display_errors', 0);
+error_reporting(0);
+
+// Set content type to JSON
+header('Content-Type: application/json');
+
+// Clear any output buffer
+ob_clean();
+
+// Initialize response
+$response = [
+    'success' => false,
+    'message' => '',
+    'booking_ref' => ''
+];
+
+try {
+    // Check if POST request
+    if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+        $response['message'] = "Invalid request method";
+        echo json_encode($response);
+        exit;
+    }
+
+    // Database connection
+    $host = 'localhost';
+    $dbname = 'mc_website';
+    $username = 'root';
+    $password = '';
+
+    try {
+        $conn = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    } catch(PDOException $e) {
+        $response['message'] = "Database connection failed";
+        echo json_encode($response);
+        exit;
+    }
+
+    // Get and sanitize form data
+    $name = trim(strip_tags($_POST['name'] ?? ''));
+    $email = trim(strip_tags($_POST['email'] ?? ''));
+    $phone = trim(strip_tags($_POST['phone'] ?? ''));
+    $event_date = trim(strip_tags($_POST['event_date'] ?? ''));
+    $event_time = trim(strip_tags($_POST['event_time'] ?? ''));
+    $event_type = trim(strip_tags($_POST['event_type'] ?? ''));
+    $event_location = trim(strip_tags($_POST['event_location'] ?? ''));
+    $guests = intval($_POST['guests'] ?? 0);
+    $package = trim(strip_tags($_POST['package'] ?? ''));
+    $message = trim(strip_tags($_POST['message'] ?? ''));
+    $terms = isset($_POST['terms']);
+
+    // Validate required fields
+    if (empty($name) || empty($email) || empty($phone) || empty($event_date) || 
+        empty($event_time) || empty($event_type) || empty($event_location) || 
+        $guests <= 0 || !$terms) {
+        
+        $response['message'] = "Please fill in all required fields and agree to terms";
+        echo json_encode($response);
+        exit;
+    }
+
+    // Validate email
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $response['message'] = "Please enter a valid email address";
+        echo json_encode($response);
+        exit;
+    }
+
+    // Validate event date
+    if (strtotime($event_date) < strtotime(date('Y-m-d'))) {
+        $response['message'] = "Event date cannot be in the past";
+        echo json_encode($response);
+        exit;
+    }
+
+    // Generate booking reference
+    $booking_ref = 'BK-' . strtoupper(substr(md5(uniqid(rand(), true)), 0, 8));
+
+    // Insert booking into database
+    $sql = "INSERT INTO bookings (booking_ref, name, email, phone, event_date, event_time, 
+            event_type, event_location, guests, package, message, status, created_at) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending', NOW())";
+
+    $stmt = $conn->prepare($sql);
+    $result = $stmt->execute([
+        $booking_ref, $name, $email, $phone, $event_date, $event_time,
+        $event_type, $event_location, $guests, $package, $message
+    ]);
+
+    if (!$result) {
+        $response['message'] = "Failed to save booking";
+        echo json_encode($response);
+        exit;
+    }
+
+    // Send email notifications
+    $admin_email = 'izabayojeanlucseverin@gmail.com';
+    
+    // Admin notification
+    $admin_subject = "New Booking Received - $booking_ref";
+    $admin_message = "
+    <html>
+    <body style='font-family: Arial, sans-serif;'>
+        <h2>New Booking Received!</h2>
+        <p><strong>Booking Reference:</strong> $booking_ref</p>
+        
+        <h3>Client Details:</h3>
+        <ul>
+            <li><strong>Name:</strong> $name</li>
+            <li><strong>Email:</strong> $email</li>
+            <li><strong>Phone:</strong> $phone</li>
+        </ul>
+        
+        <h3>Event Details:</h3>
+        <ul>
+            <li><strong>Type:</strong> $event_type</li>
+            <li><strong>Date:</strong> " . date('F j, Y', strtotime($event_date)) . "</li>
+            <li><strong>Time:</strong> " . date('g:i A', strtotime($event_time)) . "</li>
+            <li><strong>Location:</strong> $event_location</li>
+            <li><strong>Guests:</strong> $guests</li>
+            <li><strong>Package:</strong> $package</li>
+        </ul>
+        
+        " . (!empty($message) ? "<p><strong>Message:</strong> $message</p>" : "") . "
+        
+        <p><a href='http://localhost/mc_website/admin/bookings.php'>View in Admin Panel</a></p>
+    </body>
+    </html>";
+
+    $admin_headers = [
+        'MIME-Version: 1.0',
+        'Content-type: text/html; charset=UTF-8',
+        'From: Valentin MC Services <noreply@valentinmc.com>'
+    ];
+
+    // Client confirmation
+    $client_subject = "Booking Confirmation - $booking_ref";
+    $client_message = "
+    <html>
+    <body style='font-family: Arial, sans-serif;'>
+        <h2>Thank You for Your Booking!</h2>
+        <p>Dear $name,</p>
+        
+        <p>We have received your booking request and will contact you shortly to confirm the details.</p>
+        
+        <h3>Your Booking Details:</h3>
+        <ul>
+            <li><strong>Booking Reference:</strong> $booking_ref</li>
+            <li><strong>Event Type:</strong> $event_type</li>
+            <li><strong>Date:</strong> " . date('F j, Y', strtotime($event_date)) . "</li>
+            <li><strong>Time:</strong> " . date('g:i A', strtotime($event_time)) . "</li>
+            <li><strong>Location:</strong> $event_location</li>
+        </ul>
+        
+        <p><strong>What's Next?</strong></p>
+        <ol>
+            <li>We will review your booking request</li>
+            <li>Contact you within 24 hours to confirm</li>
+            <li>Discuss event details and requirements</li>
+        </ol>
+        
+        <p>Please save your booking reference: <strong>$booking_ref</strong></p>
+        
+        <p>Contact us: $admin_email | +123 456 7890</p>
+        
+        <p>Best regards,<br>Byiringiro Valentin<br>Master of Ceremony</p>
+    </body>
+    </html>";
+
+    $client_headers = [
+        'MIME-Version: 1.0',
+        'Content-type: text/html; charset=UTF-8',
+        'From: Valentin MC Services <noreply@valentinmc.com>'
+    ];
+
+    // Send emails (don't let email failures affect booking success)
+    @mail($admin_email, $admin_subject, $admin_message, implode("\r\n", $admin_headers));
+    @mail($email, $client_subject, $client_message, implode("\r\n", $client_headers));
+
+    // Create notification in database (if table exists)
+    try {
+        $notif_sql = "INSERT INTO notifications (type, title, message, data, created_at) 
+                      VALUES ('new_booking', 'New Booking Received', ?, ?, NOW())";
+        $notif_stmt = $conn->prepare($notif_sql);
+        $notif_data = json_encode(['booking_ref' => $booking_ref, 'name' => $name, 'event_type' => $event_type]);
+        $notif_stmt->execute([
+            "New booking from $name for $event_type on " . date('M j, Y', strtotime($event_date)),
+            $notif_data
+        ]);
+    } catch (Exception $e) {
+        // Ignore notification errors
+    }
+
+    // Success response
+    $response['success'] = true;
+    $response['message'] = "Thank you for your booking request! We will contact you shortly to confirm the details. Your booking reference is: $booking_ref";
+    $response['booking_ref'] = $booking_ref;
+
+} catch (Exception $e) {
+    $response['message'] = "An error occurred while processing your booking. Please try again.";
+    error_log("Booking error: " . $e->getMessage());
+}
+
+// Close database connection
+if (isset($conn)) {
+    $conn = null;
+}
+
+// Output JSON response
+echo json_encode($response);
+exit;
+?>

@@ -1,0 +1,290 @@
+<?php
+/**
+ * Debug Booking Form Handler
+ * 
+ * This file helps debug booking submission issues.
+ */
+
+// Enable error reporting for debugging
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+// Set content type to JSON for AJAX responses
+header('Content-Type: application/json');
+
+// Initialize response array
+$response = [
+    'success' => false,
+    'message' => '',
+    'booking_ref' => '',
+    'debug' => []
+];
+
+try {
+    // Debug: Check if config.php exists
+    if (!file_exists('config.php')) {
+        $response['debug'][] = "config.php file not found";
+        $response['message'] = "Configuration file missing";
+        echo json_encode($response);
+        exit;
+    }
+    
+    // Include database configuration
+    require_once 'config.php';
+    $response['debug'][] = "config.php loaded successfully";
+    
+    // Debug: Check if notifications.php exists
+    if (file_exists('notifications.php')) {
+        require_once 'notifications.php';
+        $response['debug'][] = "notifications.php loaded successfully";
+    } else {
+        $response['debug'][] = "notifications.php not found (optional)";
+    }
+    
+    // Check if the form is submitted
+    if ($_SERVER["REQUEST_METHOD"] != "POST") {
+        $response['message'] = "Invalid request method. Expected POST, got " . $_SERVER["REQUEST_METHOD"];
+        echo json_encode($response);
+        exit;
+    }
+    
+    $response['debug'][] = "POST request received";
+    
+    // Debug: Check POST data
+    $response['debug'][] = "POST data keys: " . implode(', ', array_keys($_POST));
+    
+    // Get database connection
+    if (!function_exists('connectDB')) {
+        $response['debug'][] = "connectDB function not found";
+        $response['message'] = "Database connection function missing";
+        echo json_encode($response);
+        exit;
+    }
+    
+    $conn = connectDB();
+    
+    // Check if database connection was successful
+    if (!$conn) {
+        $response['debug'][] = "Database connection failed";
+        $response['message'] = "Database connection failed";
+        echo json_encode($response);
+        exit;
+    }
+    
+    $response['debug'][] = "Database connection successful";
+    
+    // Check if sanitizeInput function exists
+    if (!function_exists('sanitizeInput')) {
+        $response['debug'][] = "sanitizeInput function not found";
+        $response['message'] = "Sanitization function missing";
+        echo json_encode($response);
+        exit;
+    }
+    
+    // Validate and sanitize form data
+    $name = isset($_POST['name']) ? sanitizeInput($_POST['name']) : '';
+    $email = isset($_POST['email']) ? sanitizeInput($_POST['email']) : '';
+    $phone = isset($_POST['phone']) ? sanitizeInput($_POST['phone']) : '';
+    $event_date = isset($_POST['event_date']) ? sanitizeInput($_POST['event_date']) : '';
+    $event_time = isset($_POST['event_time']) ? sanitizeInput($_POST['event_time']) : '';
+    $event_type = isset($_POST['event_type']) ? sanitizeInput($_POST['event_type']) : '';
+    $event_location = isset($_POST['event_location']) ? sanitizeInput($_POST['event_location']) : '';
+    $guests = isset($_POST['guests']) ? (int)$_POST['guests'] : 0;
+    $package = isset($_POST['package']) ? sanitizeInput($_POST['package']) : '';
+    $message = isset($_POST['message']) ? sanitizeInput($_POST['message']) : '';
+    $terms = isset($_POST['terms']) ? true : false;
+    
+    $response['debug'][] = "Form data sanitized";
+    $response['debug'][] = "Name: $name, Email: $email, Event: $event_type";
+    
+    // Validate required fields
+    if (empty($name) || empty($email) || empty($phone) || empty($event_date) || 
+        empty($event_time) || empty($event_type) || empty($event_location) || 
+        $guests <= 0 || !$terms) {
+        
+        $missing_fields = [];
+        if (empty($name)) $missing_fields[] = 'name';
+        if (empty($email)) $missing_fields[] = 'email';
+        if (empty($phone)) $missing_fields[] = 'phone';
+        if (empty($event_date)) $missing_fields[] = 'event_date';
+        if (empty($event_time)) $missing_fields[] = 'event_time';
+        if (empty($event_type)) $missing_fields[] = 'event_type';
+        if (empty($event_location)) $missing_fields[] = 'event_location';
+        if ($guests <= 0) $missing_fields[] = 'guests';
+        if (!$terms) $missing_fields[] = 'terms';
+        
+        $response['debug'][] = "Missing fields: " . implode(', ', $missing_fields);
+        $response['message'] = "Please fill in all required fields: " . implode(', ', $missing_fields);
+        echo json_encode($response);
+        exit;
+    }
+    
+    $response['debug'][] = "All required fields validated";
+    
+    // Check if validateEmail function exists
+    if (function_exists('validateEmail')) {
+        // Validate email
+        if (!validateEmail($email)) {
+            $response['debug'][] = "Email validation failed";
+            $response['message'] = "Please enter a valid email address.";
+            echo json_encode($response);
+            exit;
+        }
+        $response['debug'][] = "Email validation passed";
+    } else {
+        $response['debug'][] = "validateEmail function not found, skipping email validation";
+    }
+    
+    // Validate event date (must be in the future)
+    $current_date = date('Y-m-d');
+    if ($event_date < $current_date) {
+        $response['debug'][] = "Event date validation failed: $event_date < $current_date";
+        $response['message'] = "Event date cannot be in the past.";
+        echo json_encode($response);
+        exit;
+    }
+    
+    $response['debug'][] = "Event date validation passed";
+    
+    // Check if generateBookingReference function exists
+    if (!function_exists('generateBookingReference')) {
+        $response['debug'][] = "generateBookingReference function not found";
+        // Create a simple booking reference
+        $booking_ref = 'BK-' . strtoupper(substr(md5(time() . $email), 0, 8));
+    } else {
+        // Generate a unique booking reference
+        $booking_ref = generateBookingReference();
+    }
+    
+    $response['debug'][] = "Booking reference generated: $booking_ref";
+    
+    // Check if bookings table exists
+    try {
+        $check_table = $conn->query("DESCRIBE bookings");
+        $response['debug'][] = "Bookings table exists";
+    } catch (Exception $e) {
+        $response['debug'][] = "Bookings table error: " . $e->getMessage();
+        $response['message'] = "Database table missing. Please run setup script.";
+        echo json_encode($response);
+        exit;
+    }
+    
+    // Prepare SQL statement
+    $sql = "INSERT INTO bookings (booking_ref, name, email, phone, event_date, event_time, 
+            event_type, event_location, guests, package, message, created_at) 
+            VALUES (:booking_ref, :name, :email, :phone, :event_date, :event_time, 
+            :event_type, :event_location, :guests, :package, :message, NOW())";
+    
+    $stmt = $conn->prepare($sql);
+    
+    if (!$stmt) {
+        $response['debug'][] = "Failed to prepare SQL statement";
+        $response['message'] = "Database query preparation failed";
+        echo json_encode($response);
+        exit;
+    }
+    
+    $response['debug'][] = "SQL statement prepared";
+    
+    // Bind parameters
+    $stmt->bindParam(':booking_ref', $booking_ref);
+    $stmt->bindParam(':name', $name);
+    $stmt->bindParam(':email', $email);
+    $stmt->bindParam(':phone', $phone);
+    $stmt->bindParam(':event_date', $event_date);
+    $stmt->bindParam(':event_time', $event_time);
+    $stmt->bindParam(':event_type', $event_type);
+    $stmt->bindParam(':event_location', $event_location);
+    $stmt->bindParam(':guests', $guests);
+    $stmt->bindParam(':package', $package);
+    $stmt->bindParam(':message', $message);
+    
+    $response['debug'][] = "Parameters bound";
+    
+    // Execute the statement
+    if (!$stmt->execute()) {
+        $error_info = $stmt->errorInfo();
+        $response['debug'][] = "SQL execution failed: " . implode(', ', $error_info);
+        $response['message'] = "Failed to save booking to database";
+        echo json_encode($response);
+        exit;
+    }
+    
+    $response['debug'][] = "Booking saved to database successfully";
+    
+    // Try to send notifications (optional)
+    if (function_exists('sendBookingNotification')) {
+        try {
+            $booking_data = [
+                'booking_ref' => $booking_ref,
+                'name' => $name,
+                'email' => $email,
+                'phone' => $phone,
+                'event_date' => $event_date,
+                'event_time' => $event_time,
+                'event_type' => $event_type,
+                'event_location' => $event_location,
+                'guests' => $guests,
+                'package' => $package,
+                'message' => $message
+            ];
+            
+            sendBookingNotification($booking_data);
+            $response['debug'][] = "Booking notification sent";
+        } catch (Exception $e) {
+            $response['debug'][] = "Notification failed: " . $e->getMessage();
+        }
+    } else {
+        $response['debug'][] = "sendBookingNotification function not found";
+    }
+    
+    // Try to create notification record
+    if (function_exists('createNotification')) {
+        try {
+            createNotification(
+                'new_booking',
+                'New Booking Received',
+                "New booking from {$name} for {$event_type} on " . date('M j, Y', strtotime($event_date)),
+                ['booking_ref' => $booking_ref]
+            );
+            $response['debug'][] = "Notification record created";
+        } catch (Exception $e) {
+            $response['debug'][] = "Notification record failed: " . $e->getMessage();
+        }
+    } else {
+        $response['debug'][] = "createNotification function not found";
+    }
+    
+    // Set success response
+    $response['success'] = true;
+    $response['message'] = "Thank you for your booking request! We will contact you shortly to confirm the details. Your booking reference is: " . $booking_ref;
+    $response['booking_ref'] = $booking_ref;
+    $response['debug'][] = "Success response prepared";
+    
+} catch(PDOException $e) {
+    // Log the error
+    error_log("Booking PDO error: " . $e->getMessage());
+    
+    // Set error response
+    $response['success'] = false;
+    $response['message'] = "Database error occurred";
+    $response['debug'][] = "PDO Exception: " . $e->getMessage();
+    
+} catch(Exception $e) {
+    // Log any other errors
+    error_log("General booking error: " . $e->getMessage());
+    
+    // Set error response
+    $response['success'] = false;
+    $response['message'] = "General error occurred";
+    $response['debug'][] = "Exception: " . $e->getMessage();
+}
+
+// Close connection if it exists
+if (isset($conn)) {
+    $conn = null;
+}
+
+// Output response
+echo json_encode($response, JSON_PRETTY_PRINT);
+?>

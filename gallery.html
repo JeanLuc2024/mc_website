@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery | Byiringiro Valentin MC</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>Valentin<span>MC</span></h1>
+            </div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html" data-en="Home" data-rw="Ahabanza">Home</a></li>
+                    <li><a href="about.html" data-en="About" data-rw="Kuri Njye">About</a></li>
+                    <li><a href="services.html" data-en="Services" data-rw="Serivisi">Services</a></li>
+                    <li><a href="gallery.html" class="active" data-en="Gallery" data-rw="Amafoto">Gallery</a></li>
+                    <li><a href="booking.html" class="btn-book" data-en="Book Now" data-rw="Baza Ubone">Book Now</a></li>
+                    <li class="language-switcher">
+                        <select id="languageSelect" onchange="switchLanguage()">
+                            <option value="en">English</option>
+                            <option value="rw">Kinyarwanda</option>
+                        </select>
+                    </li>
+                </ul>
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Page Banner -->
+    <section class="page-banner">
+        <div class="container">
+            <h1 data-en="Event Gallery" data-rw="Amafoto y'Ibirori">Event Gallery</h1>
+            <p data-en="Moments captured from various ceremonies and events" data-rw="Ibihe byafashwe mu birori bitandukanye n'ibirori">Moments captured from various ceremonies and events</p>
+        </div>
+    </section>
+
+    <!-- Gallery Filter -->
+    <section class="gallery-filter">
+        <div class="container">
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all" data-en="All Events" data-rw="Ibirori Byose">All Events</button>
+                <button class="filter-btn" data-filter="wedding" data-en="Weddings" data-rw="Ubukwe">Weddings</button>
+                <button class="filter-btn" data-filter="anniversary" data-en="Anniversaries" data-rw="Isabukuru">Anniversaries</button>
+                <button class="filter-btn" data-filter="meeting" data-en="Meetings" data-rw="Inama">Meetings</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Grid -->
+    <section class="gallery-grid">
+        <div class="container">
+            <div class="gallery-container">
+                <!-- Wedding Images -->
+                <div class="gallery-item wedding">
+                    <div class="gallery-image">
+                        <img src="images/w1.png" alt="Wedding Ceremony">
+                        <div class="overlay">
+                            <div class="overlay-content">
+                                <h3 data-en="Beach Wedding" data-rw="Ubukwe bw'Inyanja">Beach Wedding</h3>
+                                <p data-en="A beautiful ceremony by the ocean" data-rw="Ibirori byiza ku nyanja">A beautiful ceremony by the ocean</p>
+                                <a href="images/w1.png" class="gallery-zoom"><i class="fas fa-search-plus"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-item wedding">
+                    <div class="gallery-image">
+                        <img src="images/w2.png" alt="Wedding Celebration">
+                        <div class="overlay">
+                            <div class="overlay-content">
+                                <h3 data-en="Garden Wedding" data-rw="Ubukwe bw'Ubusitani">Garden Wedding</h3>
+                                <p data-en="Elegant outdoor ceremony" data-rw="Ibirori byiza byo hanze">Elegant outdoor ceremony</p>
+                                <a href="images/w2.png" class="gallery-zoom"><i class="fas fa-search-plus"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Anniversary Images -->
+                <div class="gallery-item anniversary">
+                    <div class="gallery-image">
+                        <img src="images/anni1.png" alt="Anniversary Celebration">
+                        <div class="overlay">
+                            <div class="overlay-content">
+                                <h3 data-en="Golden Anniversary" data-rw="Isabukuru ya Zahabu">Golden Anniversary</h3>
+                                <p data-en="Celebrating 50 years together" data-rw="Kwizihiza imyaka 50 hamwe">Celebrating 50 years together</p>
+                                <a href="images/anni1.png" class="gallery-zoom"><i class="fas fa-search-plus"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-item anniversary">
+                    <div class="gallery-image">
+                        <img src="images/anni2.png" alt="Anniversary Decoration">
+                        <div class="overlay">
+                            <div class="overlay-content">
+                                <h3 data-en="Romantic Setup" data-rw="Gutegura kw'Urukundo">Romantic Setup</h3>
+                                <p data-en="Special anniversary decoration" data-rw="Imitako yihariye y'isabukuru">Special anniversary decoration</p>
+                                <a href="images/anni2.png" class="gallery-zoom"><i class="fas fa-search-plus"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Meeting Images -->
+                <div class="gallery-item meeting">
+                    <div class="gallery-image">
+                        <img src="images/meet1.png" alt="Corporate Meeting">
+                        <div class="overlay">
+                            <div class="overlay-content">
+                                <h3 data-en="Team Building" data-rw="Kubaka Itsinda">Team Building</h3>
+                                <p data-en="Corporate team celebration" data-rw="Kwizihiza itsinda ry'ubucuruzi">Corporate team celebration</p>
+                                <a href="images/meet1.png" class="gallery-zoom"><i class="fas fa-search-plus"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-item meeting">
+                    <div class="gallery-image">
+                        <img src="images/meet2.png" alt="Conference">
+                        <div class="overlay">
+                            <div class="overlay-content">
+                                <h3 data-en="Annual Conference" data-rw="Inama ya Buri Mwaka">Annual Conference</h3>
+                                <p data-en="Professional business gathering" data-rw="Inama y'ubucuruzi bw'ubwiyunge">Professional business gathering</p>
+                                <a href="images/meet2.png" class="gallery-zoom"><i class="fas fa-search-plus"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Additional Gallery Items (can be populated with more images later) -->
+                <div class="gallery-item wedding">
+                    <div class="gallery-image">
+                        <img src="images/w1.png" alt="Wedding Reception">
+                        <div class="overlay">
+                            <div class="overlay-content">
+                                <h3 data-en="Wedding Reception" data-rw="Ibirori by'Ubukwe">Wedding Reception</h3>
+                                <p data-en="Joyful celebration after ceremony" data-rw="Kwizihiza kwishimye nyuma y'ibirori">Joyful celebration after ceremony</p>
+                                <a href="images/w1.png" class="gallery-zoom"><i class="fas fa-search-plus"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-item anniversary">
+                    <div class="gallery-image">
+                        <img src="images/anni1.png" alt="Silver Anniversary">
+                        <div class="overlay">
+                            <div class="overlay-content">
+                                <h3 data-en="Silver Anniversary" data-rw="Isabukuru ya Feza">Silver Anniversary</h3>
+                                <p data-en="25 years of love and commitment" data-rw="Imyaka 25 y'urukundo n'ubwiyunge">25 years of love and commitment</p>
+                                <a href="images/anni1.png" class="gallery-zoom"><i class="fas fa-search-plus"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-item meeting">
+                    <div class="gallery-image">
+                        <img src="images/meet2.png" alt="Product Launch">
+                        <div class="overlay">
+                            <div class="overlay-content">
+                                <h3 data-en="Product Launch" data-rw="Gutangiza Ibicuruzwa">Product Launch</h3>
+                                <p data-en="Introducing new innovations" data-rw="Kwinjiza udushya dushya">Introducing new innovations</p>
+                                <a href="images/meet2.png" class="gallery-zoom"><i class="fas fa-search-plus"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <h2 data-en="Client Testimonials" data-rw="Icyo Abakiriya Bavuga">Client Testimonials</h2>
+                <p data-en="What people say about our services" data-rw="Icyo abantu bavuga ku serivisi zacu">What people say about our services</p>
+            </div>
+            <div class="testimonial-slider">
+                <div class="testimonial-slide">
+                    <div class="testimonial-content">
+                        <div class="quote">
+                            <i class="fas fa-quote-left"></i>
+                        </div>
+                        <p data-en="&quot;Valentin was exceptional as our wedding MC. He kept everything on schedule while maintaining a fun, relaxed atmosphere. Our guests were impressed with his professionalism and charm.&quot;" data-rw="&quot;Valentin yari udasanzwe nk'umuyobozi w'ibirori by'ubukwe bwacu. Yakomeje kubika ibintu byose ku gahunda mu gihe akomeje kugira ikirere gishimishije kandi gitoroshye. Abashyitsi bacu bashimishijwe n'ubwiyunge bwe n'ubwiza bwe.&quot;">"Valentin was exceptional as our wedding MC. He kept everything on schedule while maintaining a fun, relaxed atmosphere. Our guests were impressed with his professionalism and charm."</p>
+                        <div class="client-info">
+                            <h4>James & Rebecca</h4>
+                            <p data-en="Wedding Ceremony" data-rw="Ibirori by'Ubukwe">Wedding Ceremony</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-slide">
+                    <div class="testimonial-content">
+                        <div class="quote">
+                            <i class="fas fa-quote-left"></i>
+                        </div>
+                        <p data-en="&quot;We hired Valentin for our company's annual meeting, and he exceeded all expectations. His ability to engage the audience while maintaining professionalism was remarkable.&quot;" data-rw="&quot;Twahaye Valentin akazi mu nama ya buri mwaka y'ikigo cyacu, kandi yarenze ibiteganijwe byose. Ubushobozi bwe bwo gukurura abayitabira mu gihe akomeje kugira ubwiyunge byari bitangaje.&quot;">"We hired Valentin for our company's annual meeting, and he exceeded all expectations. His ability to engage the audience while maintaining professionalism was remarkable."</p>
+                        <div class="client-info">
+                            <h4>Thomas Anderson</h4>
+                            <p data-en="Corporate Meeting" data-rw="Inama z'Ubucuruzi">Corporate Meeting</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-slide">
+                    <div class="testimonial-content">
+                        <div class="quote">
+                            <i class="fas fa-quote-left"></i>
+                        </div>
+                        <p data-en="&quot;Our 10th anniversary celebration was perfect thanks to Valentin. He created such a warm, celebratory atmosphere and made sure all our special moments were highlighted beautifully.&quot;" data-rw="&quot;Kwizihiza isabukuru yacu ya 10 byari byuzuye n'ubwiza kubera Valentin. Yakoreye ikirere gishyuha, cy'kwizihiza kandi yarebe ko ibihe byacu byose byihariye byagaragajwe neza.&quot;">"Our 10th anniversary celebration was perfect thanks to Valentin. He created such a warm, celebratory atmosphere and made sure all our special moments were highlighted beautifully."</p>
+                        <div class="client-info">
+                            <h4>Daniel & Sophia</h4>
+                            <p data-en="Anniversary Celebration" data-rw="Kwizihiza Isabukuru">Anniversary Celebration</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slider-controls">
+                <span class="prev-slide"><i class="fas fa-chevron-left"></i></span>
+                <span class="next-slide"><i class="fas fa-chevron-right"></i></span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section class="cta">
+        <div class="container">
+            <h2 data-en="Want to Create Your Own Memories?" data-rw="Ushaka Gukora Kwibuka Kwawe?">Want to Create Your Own Memories?</h2>
+            <p data-en="Book Byiringiro Valentin for your next event!" data-rw="Baza Byiringiro Valentin ku birori byawe bitaha!">Book Byiringiro Valentin for your next event!</p>
+            <a href="booking.html" class="btn-primary" data-en="Book Now" data-rw="Baza Ubone">Book Now</a>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>Valentin<span>MC</span></h2>
+                    <p data-en="Making your events memorable" data-rw="Gukora ibirori byawe bitazibagirana">Making your events memorable</p>
+                </div>
+                <div class="footer-links">
+                    <h3 data-en="Quick Links" data-rw="Ibikubiyemo Byihuse">Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html" data-en="Home" data-rw="Ahabanza">Home</a></li>
+                        <li><a href="about.html" data-en="About" data-rw="Kuri Njye">About</a></li>
+                        <li><a href="services.html" data-en="Services" data-rw="Serivisi">Services</a></li>
+                        <li><a href="gallery.html" data-en="Gallery" data-rw="Amafoto">Gallery</a></li>
+                        <li><a href="booking.html" data-en="Book Now" data-rw="Baza Ubone">Book Now</a></li>
+                    </ul>
+                </div>
+                <div class="footer-services">
+                    <h3 data-en="Services" data-rw="Serivisi">Services</h3>
+                    <ul>
+                        <li><a href="services.html#wedding" data-en="Wedding Ceremonies" data-rw="Ibirori by'Ubukwe">Wedding Ceremonies</a></li>
+                        <li><a href="services.html#anniversary" data-en="Anniversary Celebrations" data-rw="Kwizihiza Isabukuru">Anniversary Celebrations</a></li>
+                        <li><a href="services.html#meetings" data-en="Corporate Meetings" data-rw="Inama z'Ubucuruzi">Corporate Meetings</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h3 data-en="Contact" data-rw="Twandikire">Contact</h3>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> 0788764456</li>
+                        <li><i class="fas fa-envelope"></i> valentin@mcservices.com</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Kigali, Rwanda</li>
+                    </ul>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p data-en="&copy; 2025 Byiringiro Valentin MC Services. All Rights Reserved." data-rw="&copy; 2025 Serivisi za Byiringiro Valentin zo Kuyobora Ibirori. Uburenganzira Bwose Burabitswe.">&copy; 2025 Byiringiro Valentin MC Services. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Lightbox for Gallery -->
+    <div class="lightbox">
+        <span class="close-lightbox">&times;</span>
+        <img class="lightbox-content" id="lightbox-img">
+        <div class="lightbox-caption"></div>
+    </div>
+
+    <script src="js/script.js"></script>
+
+    <!-- Language Switcher Styles -->
+    <style>
+        /* Language Switcher Styles */
+        .language-switcher {
+            margin-left: 20px;
+        }
+
+        .language-switcher select {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .language-switcher select:focus {
+            outline: none;
+            background: var(--secondary-color);
+        }
+
+        @media (max-width: 768px) {
+            .language-switcher {
+                margin-left: 0;
+                margin-top: 10px;
+            }
+        }
+    </style>
+
+    <script src="js/script.js"></script>
+
+    <!-- Language Translation Script -->
+    <script>
+        function switchLanguage() {
+            const selectedLang = document.getElementById('languageSelect').value;
+            const elements = document.querySelectorAll('[data-en][data-rw]');
+
+            elements.forEach(element => {
+                if (selectedLang === 'rw') {
+                    element.textContent = element.getAttribute('data-rw');
+                } else {
+                    element.textContent = element.getAttribute('data-en');
+                }
+            });
+
+            // Save language preference
+            localStorage.setItem('selectedLanguage', selectedLang);
+        }
+
+        // Load saved language preference on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedLang = localStorage.getItem('selectedLanguage') || 'en';
+            document.getElementById('languageSelect').value = savedLang;
+            if (savedLang === 'rw') {
+                switchLanguage();
+            }
+        });
+    </script>
+</body>
+</html>
